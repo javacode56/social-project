@@ -1,0 +1,33 @@
+create database Social;
+create table users(user_id nvarchar(50) Primary Key,/*it is act as email storage*/
+name nvarchar(30) NOT NULL,
+address nvarchar(100) NOT NULL
+);
+create table login(luser_id nvarchar(50) foreign key References  users(user_id),
+password nvarchar(30) NOT NULL,
+role nvarchar(2) NOT NULL 
+
+);
+create table category(cat_id nvarchar(10) Primary Key,
+name nvarchar(30) NOT NULL,
+p_time nvarchar(10) NOT NULL default '1'
+);
+create table items(item_id nvarchar(10) Primary Key,
+icat_id nvarchar(10) foreign key References category(cat_id) ,
+item_name nvarchar(30) NOT NULL,
+image nvarchar(50) NOT NULL,
+qty nvarchar(10) NOT NULL/*stock*/
+);
+create table donation(d_id nvarchar(10) Primary key,
+ditem_id nvarchar(10) foreign key References items(item_id),
+duser_id nvarchar(50) foreign key References users(user_id),
+d_date date default GETDATE(),
+reason nvarchar(1000) Default 'Secret Donation',
+
+);
+create table get_donation(
+gd_id nvarchar(10) Primary key,
+gdd_id nvarchar(10) foreign key References donation(d_id),
+user_id nvarchar(50) foreign key References users(user_id),
+g_date date default GETDATE()
+);
